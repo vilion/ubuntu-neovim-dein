@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  ubuntu-neovim-dein:
+    image: virtualion/ubuntu-neovim-dein
+    build:
+      context: ./
+    volumes:
+      - "~/kowaprojects/swatch_erp:/kowa-swatch"
+      - "~/Documents/kowa-projects/kowa_corduranyco_master:/kowa_corduranyco"
+      - "./:/srv"
+      - "~/.git:/root/.git"
+    command: sh -c 'while sleep 3600; do :; done'
+    tty: true
+    stdin_open: true
+    

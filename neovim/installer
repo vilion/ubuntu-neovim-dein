@@ -1,0 +1,134 @@
+#!/bin/bash
+
+# Install NeoVim
+# Required
+
+# Chk root user
+superuser=1
+if [ ${EUID:-${UID}} = 0 ]; then
+  superuser=0
+fi
+
+# XDG_CONFIG_HOME
+if [ $XDG_CONFIG_HOME == ""]; then
+  echo "export XDG_CONFIG_HOME=\"$HOME/.config\"" >> $HOME/.bash_profile
+fi
+
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# Make ~/.config directory
+if [ ! -d $XDG_CONFIG_HOME ]; then
+  echo "# $XDG_CONFIG_HOME not found."
+  mkdir $XDG_CONFIG_HOME
+  if [ $? -ne 0 ]; then
+    echo "# error: Make Directory '$XDG_CONFIG_HOME' failed" >&2
+    exit 1;
+  fi
+fi
+
+# Get Linux Distribution
+
+os="$(uname)"
+dist=""
+
+if [ "$os" == 'Darwin' ]; then
+  echo "# OS: Mac"
+  dist="mac"
+elif [ "${os:0:5}" == 'Linux' ]; then
+  echo "# OS: Linux"
+  RELEASE_FILE="/etc/os-release"
+  if grep '^NAME="CentOS' "$RELEASE_FILE" >/dev/null; then
+    dist=centos
+  elif grep '^NAME="Amazon' "$RELEASE_FILE" >/dev/null; then
+    dist=amazon
+  elif grep '^NAME="Ubuntu' "$RELEASE_FILE" >/dev/null; then
+    dist=ubuntu
+  elif grep '^NAME="Debian' "$RELEASE_FILE" >/dev/null; then
+    dist=debian
+  fi
+fi
+
+
+if [ "$dist" == "mac" ]; then
+  # Chk brew has installed
+  brewexist=1
+  if type brew >/dev/null 2>&1; then
+    brewexist=0
+  fi
+
+  # brew has not installed
+  if [ $brewexist -eq 1 ]; then
+    echo "# Install Homebrew"
+    xcode-select --install
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    export PATH="/usr/local/bin:$PATH"
+    export PATH="/usr/local/sbin:$PATH"
+  fi
+  
+  if type brew >/dev/null 2>&1; then
+    echo "# brew install neovim"
+    brew install neovim
+  else
+    echo "# Homebrew not found" >&2
+    exit 1
+  fi
+
+elif [ "$dist" == "centos" ] || [ "$dist" == "amazon" ]; then
+  yum="sudo yum"
+  if [ $superuser -eq 0 ]; then
+    yum="yum"
+  fi
+  $yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  $yum install -y neovim python3-neovim
+elif [ "$dist" == "ubuntu" ]; then
+  apt="sudo apt"
+  if [ $superuser -eq 0 ]; then
+    apt="apt"
+  fi
+  $apt install neovim
+  $apt install python3-neovim
+elif [ "$dist" == "debian" ]; then
+  apt="sudo apt-get"
+  if [ $superuser -eq 0 ]; then
+    apt="apt-get"
+  fi
+  $apt install neovim
+  $apt install python3-neovim
+else
+  echo "# Not supported your platform" >&2
+  exit 1;
+fi
+
+# NeoVim Installed
+echo "# NeoVim Installed"
+
+cd $XDG_CONFIG_HOME
+
+if [ -e "nvim" ]; then
+  mv nvim _nvim
+fi
+
+git clone https://github.com/kotazuck/neovim.git nvim 2>&1 >/dev/null
+
+if [ $? -ne 0 ]; then
+  echo "# git clone failed." >&2
+  echo "# Do you have github.com account?" >&2
+  exit 1
+fi
+
+if [ ! -e "nvim" ]; then
+  echo "# $XDG_CONFIG_HOME/nvim not found." >&2
+  exit 1
+fi
+
+cd nvim
+
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+sh ./installer.sh $XDG_CONFIG_HOME/nvim/dein
+
+rm ./installer.sh
+
+echo "# Open nvim and ':call dein#install()'"
+
+echo "# echo \"alias vim='nvim'\" >> ~/.bash_profile"
+

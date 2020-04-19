@@ -1,0 +1,27 @@
+{
+  "suggest.noselect": false,
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+  "go.goplsPath": "~/go/bin/gopls",
+  "languageserver": {
+    "vue": {
+      "command": "hls",
+      "filetypes": ["vue"]
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true
+      }
+    },
+    "intelephense": {
+      "command": "intelephense",
+      "args": ["--stdio"],
+      "filetypes": ["php"],
+      "initializationOptions": {
+        "storagePath": "/tmp/intelephense"
+      }
+    }
+  }
+}
