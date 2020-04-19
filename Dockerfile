@@ -25,7 +25,7 @@ RUN mkdir /root/.config && \
     zlib1g-dev uuid-dev tk-dev -y && \
     rm -rf /var/cache/apt/archives/* && \
     apt-get install -y tzdata cargo gdb clang \
-    python3 python3-pip npm exuberant-ctags php lua5.3 liblua5.3 && \
+    python3 python3-pip npm php lua5.3 liblua5.3 && \
     pip3 install powerline-status && \
     pip3 install --user pynvim && \
     npm install -g jshint  && \
@@ -40,7 +40,11 @@ RUN mkdir /root/.config && \
     #pyenv global 3.7.2 && \
 #yes | ./neovim/install_thirdparty.sh && \
     apt-get install software-properties-common -y && \
+    apt install software-properties-common -y && \
     add-apt-repository ppa:neovim-ppa/stable && \
+    add-apt-repository ppa:hnakamur/universal-ctags && \
+    apt update -y && \
+    apt install universal-ctags && \
     apt-get update -y && \
     apt-get install curl neovim -y && \
     apt-get clean -y && \
