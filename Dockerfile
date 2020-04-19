@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ADD ./ /work
+ADD ./neovim/installer /work/neovim/installer
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYENV_ROOT=/root/.pyenv/bin
@@ -57,54 +57,22 @@ RUN mkdir /root/.config && \
     chown root ./neovim/installer && \
     yes | ./neovim/installer
 
-RUN cp /work/neovim/init.vim /root/.config/nvim/init.vim && \
-    cp /work/neovim/dein.toml /root/.config/nvim/dein.toml && \
-    nvim --headless +'call dein#install()' +qall
+ADD ./neovim/init.vim /root/.config/nvim/
+ADD ./neovim/dein.toml /root/.config/nvim/
+
+RUN nvim --headless +'call dein#install()' +qall
 
 RUN nvim --headless +UpdateRemotePlugin +qall
 
-RUN nvim --headless +'CocInstall coc-tsserver -sync' +qall
-RUN nvim --headless +'CocInstall coc-html -sync' +qall
-RUN nvim --headless +'CocInstall coc-lists -sync' +qall
-RUN nvim --headless +'CocInstall coc-phpls -sync' +qall
-RUN nvim --headless +'CocInstall coc-sh -sync' +qall
-RUN nvim --headless +'CocInstall coc-stylelint -sync' +qall
-RUN nvim --headless +'CocInstall coc-vimlsp -sync' +qall
-RUN nvim --headless +'CocInstall coc-go -sync' +qall
-RUN nvim --headless +'CocInstall coc-elixir -sync' +qall
-RUN nvim --headless +'CocInstall coc-json -sync' +qall
-RUN nvim --headless +'CocInstall coc-eslint -sync' +qall
-RUN nvim --headless +'CocInstall coc-python -sync' +qall
-RUN nvim --headless +'CocInstall coc-java -sync' +qall
-RUN nvim --headless +'CocInstall coc-jest -sync' +qall
-RUN nvim --headless +'CocInstall coc-solargraph -sync' +qall
-RUN nvim --headless +'CocInstall coc-yaml -sync' +qall
-RUN nvim --headless +'CocInstall coc-highlight -sync' +qall
-RUN nvim --headless +'CocInstall coc-snippets -sync' +qall
-RUN nvim --headless +'CocInstall coc-docker -sync' +qall
-RUN nvim --headless +'CocInstall coc-diagnostic -sync' +qall
-RUN nvim --headless +'CocInstall coc-css -sync' +qall
-
-#RUN nvim --headless +'CocInstall \
-#      coc-tsserver    \ 
-#      coc-html        \ 
-#      coc-lists       \ 
-#      coc-phpls       \ 
-#      coc-sh          \ 
-#      coc-css         \ 
-#      coc-stylelint   \ 
-#      coc-vimlsp      \ 
-#      coc-go          \ 
-#      coc-elixir      \ 
-#      coc-json        \ 
-#      coc-eslint      \ 
-#      coc-python      \ 
-#      coc-java        \ 
-#      coc-jest        \ 
-#      coc-solargraph  \ 
-#      coc-yaml        \ 
-#      coc-highlight   \ 
-#      coc-snippets    \ 
-#      coc-docker      \ 
-#      coc-diagnostic -sync' +qall
+RUN nvim --headless +'CocInstall -sync coc-tsserver coc-lists coc-phpls' +qall
+RUN nvim --headless +'CocInstall -sync coc-sh' +qall
+RUN nvim --headless +'CocInstall -sync coc-html' +qall
+RUN nvim --headless +'CocInstall -sync coc-go' +qall
+RUN nvim --headless +'CocInstall -sync coc-elixir' +qall
+RUN nvim --headless +'CocInstall -sync coc-vimlsp' +qall
+RUN nvim --headless +'CocInstall -sync coc-stylelint' +qall
+RUN nvim --headless +'CocInstall -sync coc-json coc-eslint coc-python' +qall
+RUN nvim --headless +'CocInstall -sync coc-java coc-jest coc-solargraph coc-yaml' +qall
+RUN nvim --headless +'CocInstall -sync coc-highlight coc-snippets coc-docker' +qall
+RUN nvim --headless +'CocInstall -sync coc-diagnostic coc-css' +qall
 

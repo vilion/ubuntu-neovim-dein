@@ -173,6 +173,7 @@ let g:coc_global_extensions = [
       \ 'coc-snippets',
       \ 'coc-docker',
       \ 'coc-diagnostic',
+      \ 'coc-vetur'
       \]
 
 autocmd BufRead,BufNewFile *.js.erb set filetype=javascript
@@ -193,3 +194,5 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+autocmd VimEnter * execute 'CocInstall'
