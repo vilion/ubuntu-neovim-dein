@@ -1,3 +1,49 @@
+syntax on
+colorscheme molokai
+set t_Co=256
+
+set autoindent
+set smartindent
+set expandtab
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=iso-2022-jp,euc-jp,utf-8,ucs-2,cp932,sjis
+set tabstop=2
+set shiftwidth=2
+set cursorline
+set colorcolumn=80,120
+highlight ColorColumn guibg=#202020 ctermbg=lightgray
+set number
+set showmode
+set showmatch
+set title
+set backspace=indent,eol,start
+set inccommand=split
+set imdisable
+set laststatus=2
+set statusline=
+set statusline+=%#DiffAdd#%{(mode()=='n')?'\ \ NORMAL\ ':''}
+set statusline+=%#DiffChange#%{(mode()=='i')?'\ \ INSERT\ ':''}
+set statusline+=%#DiffDelete#%{(mode()=='r')?'\ \ RPLACE\ ':''}
+set statusline+=%#Cursor#%{(mode()=='v')?'\ \ VISUAL\ ':''}
+set statusline+=\ %n\           " buffer number
+set statusline+=%#Visual#       " colour
+set statusline+=%{&paste?'\ PASTE\ ':''}
+set statusline+=%{&spell?'\ SPELL\ ':''}
+set statusline+=%#CursorIM#     " colour
+set statusline+=%R                        " readonly flag
+set statusline+=%M                        " modified [+] flag
+set statusline+=%#Cursor#               " colour
+set statusline+=%#CursorLine#     " colour
+set statusline+=\ %t\                   " short file name
+set statusline+=%=                          " right align
+set statusline+=%#CursorLine#   " colour
+set statusline+=\ %Y\                   " file type
+set statusline+=%#CursorIM#     " colour
+set statusline+=\ %3l:%-2c\         " line + column
+set statusline+=%#Cursor#       " colour
+set statusline+=\ %3p%%\                " percentage
+
 " if hidden is not set, TextEdit might fail.
 set hidden
 
