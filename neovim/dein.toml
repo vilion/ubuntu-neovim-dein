@@ -189,6 +189,9 @@ hook_add = '''
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 build = './install.sh nightly'
+on_i = 1
+merged = '0'
+hook_source = 'call coil398#init#coc#hook_source()'
 hook_add = '''
   let g:coc_node_path = '/usr/local/bin/node'
   nnoremap <silent><leader>cl :CocList extensions<CR>

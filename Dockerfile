@@ -32,7 +32,7 @@ RUN mkdir /root/.config && \
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv && \
     apt install make sudo -y && \
     sudo ~/.pyenv/plugins/python-build/install.sh && \
-    apt install apt-utils lsb-release ruby-dev nodejs -y && \
+    apt install apt-utils lsb-release ruby-dev nodejs npm -y && \
     apt-get clean -y && \
     apt clean -y && \
     #pyenv install 3.7.2 && \
@@ -61,10 +61,11 @@ RUN mkdir /root/.config && \
     chown root ./neovim/installer && \
     yes | ./neovim/installer
 
-ADD ./neovim/init.vim /root/.config/nvim/
-ADD ./neovim/dein.toml /root/.config/nvim/
+ADD ./neovim/init.vim /root/.config/nvim/init.vim
+ADD ./neovim/dein.toml /root/.config/nvim/dein.toml
 
 RUN apt update -y && apt install silversearcher-ag -y
+RUN npm install n -g && n stable && apt purge -y nodejs npm
 
 RUN nvim --headless +'call dein#install()' +qall
 
@@ -72,6 +73,7 @@ RUN nvim --headless +UpdateRemotePlugin +qall
 
 RUN nvim --headless +'CocInstall -sync coc-tsserver coc-lists coc-phpls' +qall && \
     nvim --headless +'CocInstall -sync coc-sh' +qall && \
+    nvim --headless +'CocInstall -sync coc-status' +qall && \
     nvim --headless +'CocInstall -sync coc-html' +qall && \
     nvim --headless +'CocInstall -sync coc-go' +qall && \
     nvim --headless +'CocInstall -sync coc-elixir' +qall && \

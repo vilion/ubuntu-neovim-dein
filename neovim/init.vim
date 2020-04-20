@@ -1,155 +1,137 @@
-
-syntax on
-colorscheme molokai
-set t_Co=256
-
-set autoindent
-set smartindent
-set expandtab
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=iso-2022-jp,euc-jp,utf-8,ucs-2,cp932,sjis
-set tabstop=2
-set shiftwidth=2
-set cursorline
-set colorcolumn=80,120
-highlight ColorColumn guibg=#202020 ctermbg=lightgray
-set number
-set showmode
-set showmatch
-set title
-set backspace=indent,eol,start
-set inccommand=split
-set imdisable
-set laststatus=2
-set statusline=
-set statusline+=%#DiffAdd#%{(mode()=='n')?'\ \ NORMAL\ ':''}
-set statusline+=%#DiffChange#%{(mode()=='i')?'\ \ INSERT\ ':''}
-set statusline+=%#DiffDelete#%{(mode()=='r')?'\ \ RPLACE\ ':''}
-set statusline+=%#Cursor#%{(mode()=='v')?'\ \ VISUAL\ ':''}
-set statusline+=\ %n\           " buffer number
-set statusline+=%#Visual#       " colour
-set statusline+=%{&paste?'\ PASTE\ ':''}
-set statusline+=%{&spell?'\ SPELL\ ':''}
-set statusline+=%#CursorIM#     " colour
-set statusline+=%R                        " readonly flag
-set statusline+=%M                        " modified [+] flag
-set statusline+=%#Cursor#               " colour
-set statusline+=%#CursorLine#     " colour
-set statusline+=\ %t\                   " short file name
-set statusline+=%=                          " right align
-set statusline+=%#CursorLine#   " colour
-set statusline+=\ %Y\                   " file type
-set statusline+=%#CursorIM#     " colour
-set statusline+=\ %3l:%-2c\         " line + column
-set statusline+=%#Cursor#       " colour
-set statusline+=\ %3p%%\                " percentage
+" if hidden is not set, TextEdit might fail.
 set hidden
+
+" Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
-set conceallevel=0
 
-let g:vim_json_syntax_conceal = 0
+" Better display for messages
+set cmdheight=2
 
-" htmlのマッチするタグに%でジャンプ
-source $VIMRUNTIME/macros/matchit.vim
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
 
-hi Comment ctermfg=gray
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 
-if has('mouse')
-  set mouse=c
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <C-d> <Plug>(coc-range-select)
+xmap <silent> <C-d> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+if exists('*coc#status()')
+  set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 endif
 
-"dein Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
-endif
-set runtimepath+=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim
-if dein#load_state('~/.config/nvim/dein')
-  call dein#begin('~/.config/nvim/dein')
-
-  call dein#load_toml('~/.config/nvim/dein.toml', {'lazy': 0})
-
-  call dein#end()
-  call dein#save_state()
-endif
-filetype plugin indent on
-syntax enable
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-"End dein Scripts-------------------------
-
-" Key Bindings
-let mapleader = "\<Space>"
-
-" Space s で保存
-nnoremap <silent><C-s> <Esc>:<C-u>w<CR>
-inoremap <silent><C-s> <Esc>:<C-u>w<CR>
-
-" Space d で編集中のペインを閉じる（:bd）
-nnoremap <silent><leader>d <Esc>:<C-u>bd<CR>
-
-" タブ移動をSpace + hjklで
-nnoremap <silent><leader>w <C-w>w
-nnoremap <silent><leader>h <C-w>h
-nnoremap <silent><leader>j <C-w>j
-nnoremap <silent><leader>k <C-w>k
-nnoremap <silent><leader>l <C-w>l
-
-" Ctrl+hjklでインサートモード中でも移動
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
-
-" Ctrl+eでNormalへ
-map <silent><C-e> <Esc>
-map! <silent><C-e> <Esc>
-lmap <silent><C-e> <Esc>
-
-" 次のタブを開く
-nnoremap <silent><C-t> gt
-inoremap <silent><C-t> <Esc>gt
-
-" タブを閉じる
-nnoremap <silent><C-x> <Esc>:<C-u>bd<CR>
-inoremap <silent><C-x> <Esc>:<C-u>bd<CR>
-
-inoremap <silent>jj <Esc>j
-inoremap <silent>kk <Esc>k
-
-" Ctrl+左右で行頭行末へ移動
-noremap <silent><C-Left> 0
-inoremap <silent><C-Left> <Esc>0i
-noremap <silent><C-Right> $
-inoremap <silent><C-Right> <Esc>$a
-
-" Shift + 矢印で選択モード
-nnoremap <silent><S-Up> <Esc>vk
-nnoremap <silent><S-Down> <Esc>vj
-nnoremap <silent><S-Left> <Esc>vh
-nnoremap <silent><S-Right> <Esc>vl
-vnoremap <silent><S-Up> k
-vnoremap <silent><S-Down> j
-vnoremap <silent><S-Left> h
-vnoremap <silent><S-Right> l
-inoremap <silent><S-Up> <Esc>vk
-inoremap <silent><S-Down> <Esc>vj
-inoremap <silent><S-Left> <Esc>vh
-inoremap <silent><S-Right> <Esc>vl
-
-" VisualでEnterはヤンク
-vnoremap <silent><Enter> y
-
-" space rでinit.vim読み込み :initeでinit.vimの編集
-noremap <silent><leader>r <Esc>:<C-u>source ~/.config/nvim/init.vim<CR>
-cnoremap <silent>inite :<C-u>tabe ~/.config/nvim/init.vim
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 let g:node_host_prog = '/usr/local/bin/neovim-node-host'
-let g:coc_node_path = '/usr/bin/node'
+let g:coc_node_path = '/usr/local/bin/node'
 
 let g:coc_global_extensions = [
       \ 'coc-tsserver',
@@ -196,3 +178,26 @@ function! s:show_documentation()
 endfunction
 
 autocmd VimEnter * execute 'CocInstall'
+
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+set runtimepath+=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim
+if dein#load_state('~/.config/nvim/dein')
+  call dein#begin('~/.config/nvim/dein')
+
+  call dein#load_toml('~/.config/nvim/dein.toml', {'lazy': 0})
+
+  call dein#end()
+  call dein#save_state()
+endif
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+"End dein Scripts-------------------------
+
