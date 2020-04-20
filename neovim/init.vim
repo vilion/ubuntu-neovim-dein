@@ -57,7 +57,7 @@ source $VIMRUNTIME/macros/matchit.vim
 hi Comment ctermfg=gray
 
 if has('mouse')
-  set mouse=a
+  set mouse=c
 endif
 
 "dein Scripts-----------------------------

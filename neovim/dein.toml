@@ -204,3 +204,10 @@ on_ft = ['slim']
 [[plugins]]
 repo = 'ludovicchabant/vim-gutentags'
 
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+ 
+###fzf.vim
+[[plugins]]
+repo = 'junegunn/fzf.vim'

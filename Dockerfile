@@ -64,19 +64,22 @@ RUN mkdir /root/.config && \
 ADD ./neovim/init.vim /root/.config/nvim/
 ADD ./neovim/dein.toml /root/.config/nvim/
 
+RUN apt update -y && apt install silversearcher-ag -y
+
 RUN nvim --headless +'call dein#install()' +qall
 
 RUN nvim --headless +UpdateRemotePlugin +qall
 
-RUN nvim --headless +'CocInstall -sync coc-tsserver coc-lists coc-phpls' +qall
-RUN nvim --headless +'CocInstall -sync coc-sh' +qall
-RUN nvim --headless +'CocInstall -sync coc-html' +qall
-RUN nvim --headless +'CocInstall -sync coc-go' +qall
-RUN nvim --headless +'CocInstall -sync coc-elixir' +qall
-RUN nvim --headless +'CocInstall -sync coc-vimlsp' +qall
-RUN nvim --headless +'CocInstall -sync coc-stylelint' +qall
-RUN nvim --headless +'CocInstall -sync coc-json coc-eslint coc-python' +qall
-RUN nvim --headless +'CocInstall -sync coc-java coc-jest coc-solargraph coc-yaml' +qall
-RUN nvim --headless +'CocInstall -sync coc-highlight coc-snippets coc-docker' +qall
-RUN nvim --headless +'CocInstall -sync coc-diagnostic coc-css' +qall
+RUN nvim --headless +'CocInstall -sync coc-tsserver coc-lists coc-phpls' +qall && \
+    nvim --headless +'CocInstall -sync coc-sh' +qall && \
+    nvim --headless +'CocInstall -sync coc-html' +qall && \
+    nvim --headless +'CocInstall -sync coc-go' +qall && \
+    nvim --headless +'CocInstall -sync coc-elixir' +qall && \
+    nvim --headless +'CocInstall -sync coc-vimlsp' +qall && \
+    nvim --headless +'CocInstall -sync coc-stylelint' +qall && \
+    nvim --headless +'CocInstall -sync coc-json coc-eslint coc-python' +qall && \
+    nvim --headless +'CocInstall -sync coc-java coc-jest coc-solargraph coc-yaml' +qall && \
+    nvim --headless +'CocInstall -sync coc-highlight coc-snippets coc-docker' +qall && \
+    nvim --headless +'CocInstall -sync coc-diagnostic coc-css' +qall
+
 
