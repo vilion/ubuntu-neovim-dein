@@ -1,6 +1,5 @@
 {
-  "suggest.noselect": true,
-  "python.jediEnabled": false,
+  "suggest.noselect": false,
   "suggest.preferCompleteThanJumpPlaceholder": true,
   "go.goplsPath": "~/go/bin/gopls",
   "languageserver": {

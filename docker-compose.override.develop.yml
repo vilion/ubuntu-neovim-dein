@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  ubuntu-neovim-dein:
+    volumes:
+      - docker_sync_kowa:/kowa-swatch:nocopy
+
+volumes:
+  docker_sync_kowa:
+    external: true

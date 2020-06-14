@@ -1,0 +1,10 @@
+version: 2
+
+options:
+  compose-file-path: 'docker-compose.yml'
+  compose-dev-file-path: 'docker-compose.override.develop.yml'
+
+syncs:
+  docker_sync_kowa:
+    src: '~/kowaprojects/swatch_erp'
+    sync_strategy: 'unison'

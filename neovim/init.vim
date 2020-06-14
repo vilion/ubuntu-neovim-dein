@@ -1,5 +1,4 @@
 syntax on
-colorscheme molokai
 set t_Co=256
 
 set autoindent
@@ -86,14 +85,14 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+"nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gy <Plug>(coc-type-definition)
+"nmap <silent> gi <Plug>(coc-implementation)
+"nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -110,11 +109,11 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+"nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+"xmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -125,11 +124,11 @@ augroup mygroup
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+"xmap <leader>a  <Plug>(coc-codeaction-selected)
+"nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
+"nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
@@ -179,40 +178,16 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 let g:node_host_prog = '/usr/local/bin/neovim-node-host'
 let g:coc_node_path = '/usr/local/bin/node'
 
-let g:coc_global_extensions = [
-      \ 'coc-tsserver',
-      \ 'coc-html',
-      \ 'coc-lists',
-      \ 'coc-phpls',
-      \ 'coc-sh',
-      \ 'coc-css',
-      \ 'coc-stylelint',
-      \ 'coc-vimlsp',
-      \ 'coc-go',
-      \ 'coc-elixir',
-      \ 'coc-json',
-      \ 'coc-eslint',
-      \ 'coc-python',
-      \ 'coc-java',
-      \ 'coc-jest',
-      \ 'coc-solargraph',
-      \ 'coc-yaml',
-      \ 'coc-highlight',
-      \ 'coc-snippets',
-      \ 'coc-docker',
-      \ 'coc-diagnostic',
-      \ 'coc-vetur'
-      \]
 
 autocmd BufRead,BufNewFile *.js.erb set filetype=javascript
 autocmd BufRead,BufNewFile *.html.erb set filetype=ruby
 
 set completeopt+=noinsert
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+"nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gy <Plug>(coc-type-definition)
+"nmap <silent> gi <Plug>(coc-implementation)
+"nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
@@ -245,5 +220,126 @@ syntax enable
 if dein#check_install()
   call dein#install()
 endif
+
+  let g:coc_global_extensions = [
+        \ 'coc-tsserver',
+        \ 'coc-html',
+        \ 'coc-lists',
+        \ 'coc-phpls',
+        \ 'coc-sh',
+        \ 'coc-css',
+        \ 'coc-stylelint',
+        \ 'coc-vimlsp',
+        \ 'coc-go',
+        \ 'coc-elixir',
+        \ 'coc-json',
+        \ 'coc-eslint',
+        \ 'coc-python',
+        \ 'coc-java',
+        \ 'coc-jest',
+        \ 'coc-solargraph',
+        \ 'coc-yaml',
+        \ 'coc-highlight',
+        \ 'coc-snippets',
+        \ 'coc-docker',
+        \ 'coc-diagnostic',
+        \ 'coc-vetur',
+        \ 'coc-sql',
+        \ 'coc-tabnine',
+        \ 'coc-prettier',
+        \ 'coc-tslint-plugin',
+        \ 'coc-explorer',
+        \ 'coc-git'
+        \]
+
+  augroup MyAutoCmd
+    autocmd!
+  augroup END
+
+  autocmd MyAutoCmd FileType * call s:configure_lsp()
+  function! s:configure_lsp() abort
+    let l:coc_filetyps = [
+      \ 'Dockerfile',
+      \ 'bash',
+      \ 'css',
+      \ 'scss',
+      \ 'html',
+      \ 'javascript',
+      \ 'json',
+      \ 'markdown',
+      \ 'python',
+      \ 'typescript',
+      \ 'vue',
+      \ 'yaml',
+      \ ]
+    if match(l:coc_filetyps, &filetype) == -1
+      return
+    endif
+
+    " Remap keys
+    nmap <buffer><C-]> <Plug>(coc-definition)
+    nmap <buffer><silent> gy <Plug>(coc-type-definition)
+    nmap <buffer><silent> gi <Plug>(coc-implementation)
+    nmap <buffer><silent> gr <Plug>(coc-references)
+    nmap <buffer><leader>R   <Plug>(coc-rename)
+    " Remap for format selected region
+    vmap <buffer><leader>f   <Plug>(coc-format-selected)
+    nmap <buffer><leader>f   <Plug>(coc-format-selected)
+    " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+    vmap <buffer><leader>a   <Plug>(coc-codeaction-selected)
+    nmap <buffer><leader>a   <Plug>(coc-codeaction-selected)
+    " Remap for do codeAction of current line
+    nmap <buffer><leader>ac  <Plug>(coc-codeaction)
+    " Fix autofix problem of current line
+    nmap <buffer><leader>qf  <Plug>(coc-fix-current)
+    " Diagnostic
+    nmap <buffer><silent> gd <Plug>(coc-diagnostic-info)
+    nmap <buffer><silent> gn <Plug>(coc-diagnostic-next)
+    nmap <buffer><silent> gp <Plug>(coc-diagnostic-prev)
+    " Setup format selected region
+    setlocal formatexpr=CocAction('formatSelected')
+    " coc-git
+    highlight default link GitGutterAdd           NONE
+    highlight default link GitGutterChange        NONE
+    highlight default link GitGutterDelete        NONE
+    highlight default link GitGutterChangeDelete  NONE
+    " Use K to show documentation in preview window
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+    function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+      else
+        call CocAction('doHover')
+      endif
+    endfunction
+
+    augroup CocNvimGroup
+      autocmd!
+      " Highlight symbol under cursor on CursorHold
+      autocmd CursorHold * silent call CocActionAsync('highlight')
+      " Update signature help on jump placeholder
+      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    augroup end
+
+    command! -nargs=0 Prettier :CocCommand prettier.formatFile
+  endfunction
+  " Explorer
+  nnoremap <silent> ge :CocCommand explorer<CR>
 "End dein Scripts-------------------------
 
+let g:ale_fixers = {
+      \ 'ruby': ['rubocop'],
+      \ }
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'vue': ['eslint'],
+\   'css': ['stylelint'],
+\   'php': ['intelephense'],
+\   'ruby': ['rubocop', 'solargraph', 'ruby'],
+\}
+
+let g:syntastic_mode_map = { "mode": "active", "active_filetypes": ['ruby'],  "passive_filetypes": ["tex"]  }
+let g:syntastic_ruby_checkers = ['rubylint']
+let g:syntastic_ruby_rubocop_args = "-l --only"
+let g:go_version_warning = 0

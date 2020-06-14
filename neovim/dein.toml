@@ -58,13 +58,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'jistr/vim-nerdtree-tabs'
-hook_add = '''
-  let g:nerdtree_tabs_open_on_console_startup = 1
-  let g:nerdtree_tabs_focus_on_files = 1
-'''
-
-[[plugins]]
 repo = 'mg979/vim-visual-multi'
 
 [[plugins]]
@@ -102,21 +95,21 @@ hook_add = '''
   nmap ga <Plug>(EasyAlign)
 '''
 
-[[plugins]]
-repo = 'prettier/vim-prettier'
-build = 'yarn install'
-on_ft = ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'lua', 'php', 'python', 'ruby', 'html', 'swift']
-hook_add = '''
-  let g:prettier#exec_cmd_path = "/usr/local/bin/prettier"
-
-  " prettier
-  augroup fixprettier
-    au!
-    let g:prettier#autoformat = 0
-    let g:prettier#quickfix_enabled = 0
-    au BufwritePre *.js,*.jsx,*.ts,*.css,*.json,*.md,*.vue,*.yaml,*.html,*.php PrettierAsync
-  augroup End
-'''
+#[[plugins]]
+#repo = 'prettier/vim-prettier'
+#build = 'yarn install'
+#on_ft = ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'lua', 'php', 'python', 'ruby', 'html', 'swift']
+#hook_add = '''
+#  let g:prettier#exec_cmd_path = "/usr/local/bin/prettier"
+#
+#  " prettier
+#  augroup fixprettier
+#    au!
+#    let g:prettier#autoformat = 0
+#    let g:prettier#quickfix_enabled = 0
+#    au BufwritePre *.js,*.jsx,*.ts,*.css,*.json,*.md,*.vue,*.yaml,*.html,*.php PrettierAsync
+#  augroup End
+#'''
 
 [[plugins]]
 repo = 'dense-analysis/ale'
@@ -132,7 +125,13 @@ hook_add = '''
   \   'vue': ['eslint'],
   \   'css': ['stylelint'],
   \   'php': ['intelephense'],
+  \   'ruby': ['rubocop', 'solargraph', 'ruby'],
   \}
+
+  let g:ale_fixers = {
+      \ 'ruby': ['rubocop'],
+      \ }
+
   " ale_lintersに登録されているもののみ
   let g:ale_linters_explicit = 1
 
@@ -154,11 +153,6 @@ hook_add = '''
   " eslint
   let g:ale_javascript_eslint_options = '--ignore-pattern "!.eslintrc.js --ignore-pattern "!prettier.config.js"'
 '''
-
-[[plugins]]
-repo = 'phpactor/phpactor'
-build = 'composer install'
-on_ft = ['php']
 
 [[plugins]]
 repo = 'plasticboy/vim-markdown'
@@ -191,7 +185,6 @@ repo = 'neoclide/coc.nvim'
 build = './install.sh nightly'
 on_i = 1
 merged = '0'
-hook_source = 'call coil398#init#coc#hook_source()'
 hook_add = '''
   let g:coc_node_path = '/usr/local/bin/node'
   nnoremap <silent><leader>cl :CocList extensions<CR>
@@ -214,3 +207,23 @@ build = './install --all'
 ###fzf.vim
 [[plugins]]
 repo = 'junegunn/fzf.vim'
+
+[[plugins]]
+repo = 'jpo/vim-railscasts-theme'
+hook_add = '''
+  set background=dark
+  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
+  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+  autocmd VimEnter * nested colorscheme railscasts
+'''
+
+[[plugins]]
+repo = 'neoclide/coc-tabnine'
+
+#[[plugins]]
+#repo = 'scrooloose/syntastic'
+#hook_add = '''
+#  let g:syntastic_mode_map = { "mode": "active", "active_filetypes": ['ruby'],  "passive_filetypes": ["tex"]  }
+#  let g:syntastic_ruby_checkers = ['rubylint']
+#  let g:syntastic_ruby_rubocop_args = "-l --only"
+#'''

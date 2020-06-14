@@ -1,11 +1,10 @@
 version: "3.7"
 services:
   ubuntu-neovim-dein:
-    image: virtualion/ubuntu-neovim-dein
+    image: virtualion/ubuntu-neovim-dein:rbenv
     build:
       context: ./
     volumes:
-      - "~/kowaprojects/swatch_erp:/kowa-swatch"
       - "~/Documents/kowa-projects/kowa_corduranyco_master:/kowa_corduranyco"
       - "./:/srv"
       - "~/.git:/root/.git"
