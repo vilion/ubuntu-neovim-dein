@@ -217,9 +217,9 @@ filetype plugin indent on
 syntax enable
 
 " If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
+"if dein#check_install()
+"  call dein#install()
+"endif
 
   let g:coc_global_extensions = [
         \ 'coc-tsserver',
@@ -246,8 +246,6 @@ endif
         \ 'coc-vetur',
         \ 'coc-sql',
         \ 'coc-tabnine',
-        \ 'coc-prettier',
-        \ 'coc-tslint-plugin',
         \ 'coc-explorer',
         \ 'coc-git'
         \]
@@ -327,19 +325,4 @@ endif
   nnoremap <silent> ge :CocCommand explorer<CR>
 "End dein Scripts-------------------------
 
-let g:ale_fixers = {
-      \ 'ruby': ['rubocop'],
-      \ }
-
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'vue': ['eslint'],
-\   'css': ['stylelint'],
-\   'php': ['intelephense'],
-\   'ruby': ['rubocop', 'solargraph', 'ruby'],
-\}
-
-let g:syntastic_mode_map = { "mode": "active", "active_filetypes": ['ruby'],  "passive_filetypes": ["tex"]  }
-let g:syntastic_ruby_checkers = ['rubylint']
-let g:syntastic_ruby_rubocop_args = "-l --only"
 let g:go_version_warning = 0

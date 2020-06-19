@@ -125,12 +125,9 @@ hook_add = '''
   \   'vue': ['eslint'],
   \   'css': ['stylelint'],
   \   'php': ['intelephense'],
-  \   'ruby': ['rubocop', 'solargraph', 'ruby'],
+  \   'eruby': [],
+  \   'ruby': ['rubocop', 'solargraph', 'ruby']
   \}
-
-  let g:ale_fixers = {
-      \ 'ruby': ['rubocop'],
-      \ }
 
   " ale_lintersに登録されているもののみ
   let g:ale_linters_explicit = 1
@@ -220,10 +217,3 @@ hook_add = '''
 [[plugins]]
 repo = 'neoclide/coc-tabnine'
 
-#[[plugins]]
-#repo = 'scrooloose/syntastic'
-#hook_add = '''
-#  let g:syntastic_mode_map = { "mode": "active", "active_filetypes": ['ruby'],  "passive_filetypes": ["tex"]  }
-#  let g:syntastic_ruby_checkers = ['rubylint']
-#  let g:syntastic_ruby_rubocop_args = "-l --only"
-#'''
