@@ -2,8 +2,12 @@ version: "3.7"
 services:
   ubuntu-neovim-dein:
     volumes:
-      - docker_sync_kowa:/kowa-swatch:nocopy
+      - docker_kowa:/kowa-swatch:delegated
 
 volumes:
-  docker_sync_kowa:
-    external: true
+  docker_kowa:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":/Users/takabatakekoichi/kowaprojects/swatch_erp"
