@@ -90,7 +90,7 @@ RUN apt update -y && apt install silversearcher-ag -y
 RUN npm install n -g && n stable && apt purge -y nodejs npm
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && \
-    apt update -y && apt install -y yarn
+    apt update -y && apt install -y yarn && yarn global add typescript
 
 RUN nvim --headless +'call coc#util#install()' +qall && \
     nvim --headless +'call dein#install()' +qall && \
@@ -114,4 +114,8 @@ RUN nvim --headless +'call coc#util#install()' +qall
 #     nvim --headless +'CocInstall -sync coc-highlight coc-snippets coc-docker' +qall && \
 #     nvim --headless +'CocInstall -sync coc-diagnostic coc-css' +qall
 
-
+RUN apt-get install locales
+RUN locale-gen ja_JP.UTF-8
+ENV LANG ja_JP.UTF-8
+ENV LC_CTYPE ja_JP.UTF-8
+RUN localedef -f UTF-8 -i ja_JP ja_JP.utf8

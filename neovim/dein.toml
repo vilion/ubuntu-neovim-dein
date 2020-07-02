@@ -121,8 +121,8 @@ hook_add = '''
 
   " lint
   let g:ale_linters = {
-  \   'javascript': ['eslint'],
-  \   'vue': ['eslint'],
+  \   'javascript': ['tsserver'],
+  \   'vue': ['vetur'],
   \   'css': ['stylelint'],
   \   'php': ['intelephense'],
   \   'eruby': [],

@@ -3,6 +3,11 @@ services:
   ubuntu-neovim-dein:
     volumes:
       - docker_kowa:/kowa-swatch:delegated
+      - /kowa-swatch/app/tmp/cache/
+      - /kowa-swatch/node_modules/
+      - /kowa-swatch/public/packs/
+      - /kowa-swatch/public/assets/
+      - /kowa-swatch/tmp/
 
 volumes:
   docker_kowa:
