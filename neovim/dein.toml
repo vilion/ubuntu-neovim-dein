@@ -95,21 +95,21 @@ hook_add = '''
   nmap ga <Plug>(EasyAlign)
 '''
 
-#[[plugins]]
-#repo = 'prettier/vim-prettier'
-#build = 'yarn install'
-#on_ft = ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'lua', 'php', 'python', 'ruby', 'html', 'swift']
-#hook_add = '''
-#  let g:prettier#exec_cmd_path = "/usr/local/bin/prettier"
-#
-#  " prettier
-#  augroup fixprettier
-#    au!
-#    let g:prettier#autoformat = 0
-#    let g:prettier#quickfix_enabled = 0
-#    au BufwritePre *.js,*.jsx,*.ts,*.css,*.json,*.md,*.vue,*.yaml,*.html,*.php PrettierAsync
-#  augroup End
-#'''
+[[plugins]]
+repo = 'prettier/vim-prettier'
+build = 'yarn install'
+on_ft = ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'lua', 'php', 'python', 'ruby', 'html', 'swift']
+hook_add = '''
+  let g:prettier#exec_cmd_path = "/usr/local/bin/prettier"
+
+  " prettier
+  augroup fixprettier
+    au!
+    let g:prettier#autoformat = 0
+    let g:prettier#quickfix_enabled = 0
+    au BufwritePre *.js,*.jsx,*.ts,*.css,*.json,*.md,*.vue,*.yaml,*.html,*.php PrettierAsync
+  augroup End
+'''
 
 [[plugins]]
 repo = 'dense-analysis/ale'
@@ -121,7 +121,7 @@ hook_add = '''
 
   " lint
   let g:ale_linters = {
-  \   'javascript': ['tsserver'],
+  \   'javascript': ['tsserver, eslint'],
   \   'vue': ['vetur'],
   \   'css': ['stylelint'],
   \   'php': ['intelephense'],

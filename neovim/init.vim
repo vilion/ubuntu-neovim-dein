@@ -1,4 +1,4 @@
-syntax off
+syntax on
 set t_Co=256
 
 set autoindent
@@ -214,7 +214,7 @@ if dein#load_state('~/.config/nvim/dein')
   call dein#save_state()
 endif
 filetype plugin indent on
-syntax off
+syntax on
 
 " If you want to install not installed plugins on startup.
 "if dein#check_install()
@@ -223,6 +223,7 @@ syntax off
 
   let g:coc_global_extensions = [
         \ 'coc-html',
+        \ 'coc-prettier',
         \ 'coc-lists',
         \ 'coc-tsserver',
         \ 'coc-phpls',
