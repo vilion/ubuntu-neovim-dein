@@ -248,7 +248,8 @@ syntax on
         \ 'coc-sql',
         \ 'coc-tabnine',
         \ 'coc-explorer',
-        \ 'coc-git'
+        \ 'coc-git',
+        \ 'coc-cfn-lint'
         \]
 
   augroup MyAutoCmd

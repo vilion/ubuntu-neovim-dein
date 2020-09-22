@@ -1,0 +1,5 @@
+version: "3.7"
+services:
+  ubuntu-neovim-dein:
+    volumes:
+      - /home/takabatakekoichi/production-research/swatch_erp:/kowa-swatch:delegated
