@@ -90,7 +90,7 @@ RUN apt update -y && apt install silversearcher-ag -y
 RUN npm install n -g && n stable && apt purge -y nodejs npm
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && \
-    apt update -y && apt install -y yarn && yarn global add typescript
+    apt update -y && apt install -y yarn && yarn global add typescript && yarn global add esbuild
 
 RUN nvim --headless +'call coc#util#install()' +qall && \
     nvim --headless +'call dein#install()' +qall && \
