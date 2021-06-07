@@ -2,5 +2,5 @@ version: "3.7"
 services:
   ubuntu-neovim-dein:
     volumes:
-      - "~/react-native-practice:/srv"
+      - "~/development/react-native-practice:/srv"
 
