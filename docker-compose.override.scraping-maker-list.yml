@@ -1,0 +1,6 @@
+version: "3.7"
+services:
+  ubuntu-neovim-dein:
+    volumes:
+      - /home/takabatakekoichi/development/scraping-maker-sales-list:/scraping-maker-sales-list:delegated
+

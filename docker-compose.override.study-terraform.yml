@@ -1,0 +1,5 @@
+version: "3.7"
+services:
+  ubuntu-neovim-dein:
+    volumes:
+      - /home/takabatakekoichi/study/terraform/pluralsight:/pluralsight:delegated

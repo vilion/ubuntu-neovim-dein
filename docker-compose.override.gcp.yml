@@ -3,4 +3,9 @@ services:
   ubuntu-neovim-dein:
     volumes:
       - /home/takabatakekoichi/development/swatch_erp:/kowa-swatch:delegated
-      - "~/development/react-native-practice:/react-native-practice:delegated"
+      - ~/development/react-native-practice:/react-native-practice:delegated
+      - ~/development/kalin-studio:/kalin-studio:delegated
+      - /home/takabatakekoichi/development/dockerimages/ruby-selenium:/ruby-selenium:delegated
+      - ~/development/first-group:/first-group:delegated
+      - /home/takabatakekoichi/launch test:/unity-launch-test:delegated
+      - /home/takabatakekoichi/study/machine-learning/coursera-andrew-ng:/study-machine-learning:delegated

@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  ubuntu-neovim-dein:
+    volumes:
+      - /home/takabatakekoichi/development/pharma-cloud/sourcecode/core:/core:delegated
+      - /home/takabatakekoichi/development/pharma-cloud/sourcecode/medorder:/medorder:delegated
+      - /home/takabatakekoichi/development/pharma-cloud/sourcecode/medshare:/medshare:delegated
+      - /home/takabatakekoichi/development/pharma-cloud/sourcecode/pharsas-dp:/pharsas-dp:delegated
